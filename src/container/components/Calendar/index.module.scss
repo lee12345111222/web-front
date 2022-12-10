@@ -1,0 +1,33 @@
+.calendarContainer {
+  :global {
+    .ant-picker-content {
+      thead tr {
+
+        th:first-child,
+        th:last-child {
+          color: red;
+        }
+      }
+
+      tbody tr {
+        .ant-picker-cell-inner {
+          margin: 0;
+          padding: 0;
+        }
+
+        .ant-picker-calendar-date-value {
+          text-align: left;
+        }
+
+        .ant-picker-calendar-date-content {
+          height: 60px;
+        }
+
+        td:first-child,
+        td:last-child {
+          background-color: rgba(255, 100, 100, 0.1);
+        }
+      }
+    }
+  }
+}

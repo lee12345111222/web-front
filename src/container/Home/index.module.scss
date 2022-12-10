@@ -1,0 +1,137 @@
+.homeSwrap {
+  padding-top: 20px;
+  width: 1200px;
+  height: 100vh;
+  background: rgba(255, 255, 255);
+  display: flex;
+
+  .leftBox {
+    width: 700px;
+
+    .noneLabel {
+      height: 100px;
+      border-bottom: 2px solid rgba(5, 5, 5, 0.1);
+    }
+
+    .createBtn {
+      display: flex;
+      align-items: center;
+      margin-top: 30px;
+      font-size: 24px;
+      font-weight: 700;
+
+      div {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .rightBox {
+    margin-left: 50px;
+    flex: 1;
+
+    .contentBox {
+      display: flex;
+      margin-top: 40px;
+
+      .leftConent {
+        flex: 1;
+
+        .defaultBox {
+          position: relative;
+          height: 120px;
+          border-radius: 20px;
+          background: rgba(0, 0, 0, .1);
+          border: 1px solid rgba(5, 5, 5, .1);
+
+          .img {
+            border-radius: 100%;
+            position: relative;
+            bottom: -70px;
+            left: 30px;
+          }
+        }
+
+        .shareMoment {
+          margin-top: 60px;
+          position: relative;
+          height: 120px;
+          border-radius: 20px;
+          background: rgba(0, 0, 0, .1);
+          border: 1px solid rgba(5, 5, 5, .1);
+          padding: 20px;
+
+          .shareInput {
+            border-radius: 20px;
+            width: 370px;
+          }
+
+          .line1 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            height: 3px;
+            border-bottom: 2px solid rgba(5, 5, 5, 0.1);
+          }
+
+          .videoBox {
+            height: 30px;
+            display: flex;
+            background: rgba(0, 0, 0);
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            align-items: center;
+            justify-content: space-around;
+          }
+        }
+
+        .shareContainer {
+          margin-top: 30px;
+          margin-bottom: 30px;
+        }
+
+        .knowFriends {
+          height: 160px;
+          background: rgba(0, 0, 0, .1);
+          border-radius: 20px;
+          padding: 10px 20px;
+
+          .title {
+            font-weight: 600;
+            color: #fff;
+            font-size: 26px;
+          }
+
+          .frilist {
+            display: flex;
+            padding-top: 25px;
+
+            div {
+              margin-right: 10px;
+            }
+
+            .img {
+              border-radius: 100%;
+              margin-right: 20px;
+            }
+          }
+        }
+      }
+
+      .rightContent {
+        width: 100px;
+      }
+    }
+  }
+
+  :global {
+    .playDateModal {
+      height: 300px;
+    }
+
+    .playContent {
+      height: 300px;
+    }
+  }
+
+}

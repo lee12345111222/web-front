@@ -1,0 +1,71 @@
+.shareBox {
+  background: #000;
+  max-height: 600px;
+  min-height: 400px;
+  overflow: auto;
+  padding: 20px 15px;
+
+  .shareItem {
+    background: rgba(100, 100, 100, .3);
+
+    .shareHedaer {
+      display: flex;
+      padding: 20px 10px 0;
+
+      .shareImg {
+        width: 60px;
+        margin-right: 10px;
+
+        .img {
+          border-radius: 100%;
+        }
+      }
+
+      .shareTitle {
+        flex: 1;
+        color: #fff;
+      }
+
+      .optBtn {
+        margin-left: 10px;
+        width: 20px;
+        color: #fff;
+      }
+    }
+
+    .sahredContent {
+      color: #fff;
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      .subTitle {
+        margin-left: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+
+      .shareImgs {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .shareCollect {
+        color: #fff;
+        margin-top: 20px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(100, 100, 100, .3);
+      }
+
+      .shareOpt {
+        display: flex;
+        justify-content: space-around;
+        color: #fff;
+        height: 50px;
+        line-height: 50px;
+        font-weight: 600;
+        border-bottom: 2px solid rgba(100, 100, 100, .3);
+      }
+    }
+  }
+
+}

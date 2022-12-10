@@ -1,0 +1,23 @@
+.groupsBox {
+  display: flex;
+  align-items: center;
+
+  .content {
+    display: flex;
+    align-items: flex-end;
+    flex: 1;
+  }
+
+  .addBtn {
+    width: 100px;
+  }
+
+  .groupAvar {
+    margin-right: 20px;
+
+    .img {
+      border-radius: 100%;
+    }
+  }
+
+}
