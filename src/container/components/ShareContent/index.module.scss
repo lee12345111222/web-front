@@ -31,6 +31,8 @@
         width: 20px;
         color: #fff;
       }
+
+
     }
 
     .sahredContent {
@@ -65,7 +67,44 @@
         font-weight: 600;
         border-bottom: 2px solid rgba(100, 100, 100, .3);
       }
+
+      .commentsBox {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        margin-top: 15px;
+
+        :global {
+          .ant-input {
+            background: rgba(100, 100, 100, .3);
+            color: #fff;
+            border: none;
+          }
+
+
+          .ant-input-group-addon {
+            border: none;
+            background: rgba(100, 100, 100, .3);
+          }
+        }
+
+        .commenus {
+          display: flex;
+          color: #fff;
+
+          div {
+            margin-right: 10px;
+          }
+        }
+
+        .comImgav {
+          margin-right: 5px;
+
+          .img {
+            border-radius: 100%;
+          }
+        }
+      }
     }
   }
-
 }

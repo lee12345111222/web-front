@@ -6,22 +6,21 @@ import styles from './index.module.scss'
 interface GropProps {
   friendsList: any[], // 群组礼拜
   addFirends?: Function, // 点击添加好友
-  sucHandle?: Function // 点击群组
+  sucHandle?: Function, // 点击群组
+  title: string
 }
 
 // 群组
 const Groups = memo(function (props: GropProps) {
-  let { friendsList = [] } = props
-
-  friendsList = [0, 1, 1, 1]
-  console.log("groupList", friendsList)
-
+  let { friendsList = [], title } = props
   // 添加群组
   const addFirends = () => {
-    console.log("添加群组")
+    const { addFirends } = props;
+    if (addFirends) addFirends()
   }
   return (
     <div className={styles.friendsBox}>
+      <div className={styles.friendsTitle}>{title}</div>
       <div className={styles.friendsContent}>
         {
           friendsList.map((item, index) => {

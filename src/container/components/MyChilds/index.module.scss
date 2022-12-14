@@ -1,0 +1,23 @@
+.myChildsBox {
+  display: flex;
+  align-items: center;
+
+  .content {
+    display: flex;
+    align-items: flex-end;
+    flex: 1;
+  }
+
+  .addBtn {
+    width: 100px;
+  }
+
+  .childAvar {
+    margin-right: 20px;
+
+    .img {
+      border-radius: 100%;
+    }
+  }
+
+}

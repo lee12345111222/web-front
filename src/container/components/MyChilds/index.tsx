@@ -4,48 +4,52 @@ import { Image, Modal } from 'antd';
 import styles from './index.module.scss'
 
 interface GropProps {
-  groupList: any[], // 群组礼拜
-  activeIndex: number, // 当前显示群组
-  addGroup?: Function, // 点击加入群组
-  sucHandle?: Function // 点击群组
+  childsList: any[], // 小孩列表
+  addChilds?: Function, // 添加小孩
+  onSucHandle?: Function // 点击小孩回调
 }
 
 // 群组
-const Groups = memo(function (props: GropProps) {
-  let { groupList = [], activeIndex = 0 } = props
-  console.log("groupList", groupList)
+const MyChilds = memo(function (props: GropProps) {
+  let { childsList = [], } = props
   // 添加群组
-  const _addGroups = () => {
+  const _addChilds = () => {
     console.log("添加群组")
-    const { addGroup } = props;
-    if (addGroup) addGroup()
+    const { addChilds } = props;
+    if (addChilds) addChilds()
+  }
+
+  const _onSucHandle = () => {
+    const { onSucHandle } = props
+    if (onSucHandle) onSucHandle()
   }
   return (
-    <div className={styles.groupsBox}>
+    <div className={styles.myChildsBox}>
       <div className={styles.content}>
         {
-          groupList.map((item, index) => {
+          childsList.map((item, index) => {
             return <div
-              className={styles.groupAvar}
+              className={styles.childAvar}
               key={index + 1}>
               <Image
+                onClick={_onSucHandle}
                 preview={false}
                 className={styles.img}
-                width={activeIndex === index ? 100 : 70}
+                width={70}
                 src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
             </div>
           })
         }
       </div>
-      <div className={styles.addBtn} onClick={_addGroups}>
+      <div className={styles.addBtn} onClick={_addChilds}>
         {/* <Image
           preview={false}
           className={styles.img}
           width={100}
           src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" /> */}
-        添加群组
+        添加小孩
       </div>
     </div>)
 })
 
-export default Groups;
+export default MyChilds;

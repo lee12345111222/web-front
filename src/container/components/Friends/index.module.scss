@@ -4,6 +4,13 @@
 
   justify-content: center;
 
+  .friendsTitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 24px;
+  }
+
   .friendsContent {
     display: flex;
     flex-direction: column;
