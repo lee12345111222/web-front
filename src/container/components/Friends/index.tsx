@@ -6,18 +6,23 @@ import styles from './index.module.scss'
 interface GropProps {
   friendsList: any[], // 群组礼拜
   addFirends?: Function, // 点击添加好友
-  sucHandle?: Function, // 点击群组
+  onSucHandle?: Function, // 点击群组
   title: string
 }
 
 // 群组
 const Groups = memo(function (props: GropProps) {
-  let { friendsList = [], title } = props
+  let { friendsList = [], title, onSucHandle } = props
   // 添加群组
   const addFirends = () => {
     const { addFirends } = props;
     if (addFirends) addFirends()
   }
+
+  const _onSucHandle = (info: any) => {
+    if (onSucHandle) onSucHandle(info)
+  }
+
   return (
     <div className={styles.friendsBox}>
       <div className={styles.friendsTitle}>{title}</div>
@@ -25,6 +30,7 @@ const Groups = memo(function (props: GropProps) {
         {
           friendsList.map((item, index) => {
             return <div
+              onClick={() => { _onSucHandle(item) }}
               className={styles.friendsAvar}
               key={index + 1}>
               <Image

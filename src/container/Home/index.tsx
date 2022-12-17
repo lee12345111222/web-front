@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState, } from 'react';
 import { gapi, loadAuth2 } from "gapi-script";
 import Calendars from '../components/Calendar'
 import { Image, Modal, Input } from 'antd';
@@ -6,6 +6,7 @@ import Groups from '../components/Groups';
 import Friends from '../components/Friends'
 import ShareContent from '../components/ShareContent'
 import MyChilds from '../components/MyChilds'
+import ChatPopup from '../components/ChatPopup';
 
 import 'animate.css';
 import styles from './index.module.scss'
@@ -57,17 +58,16 @@ export const Home = memo(function () {
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
   const clientId = process.env.REACT_APP_CLIENT_ID;
-  console.log(process.env)
-  console.log(calendarID)
-  console.log(apiKey)
-  console.log(accessToken)
-  console.log(clientId)
 
   const [isModalType, setIsMoalType] = useState(0)
   const [groupList, setGroupList]: any = useState([1])
   const [friendsList, setFriendsList]: any = useState([1])
   const [childsList, setChildsList]: any = useState([1])
   const [isParents, setIsParents] = useState(true)
+  const [openChat, setOpenChat] = useState(false)
+
+  //const chatRef = useRef(null)
+  //const chatRef = createRef();
 
   useEffect(() => {
     getEvents(calendarID, apiKey, clientId, accessToken)
@@ -114,6 +114,11 @@ export const Home = memo(function () {
     console.log(item)
   }
 
+  const onSucHandle = (info: any) => {
+    console.log("当前操作模块")
+    setOpenChat(true)
+  }
+
   return (
     <div className={styles.homeSwrap}>
       <div className={styles.leftBox}>
@@ -136,6 +141,7 @@ export const Home = memo(function () {
             groupList={groupList}
             activeIndex={0}
             addGroup={() => setIsMoalType(2)}
+            onSucHandle={onSucHandle}
           />
         }
 
@@ -213,15 +219,17 @@ export const Home = memo(function () {
             </div>
           </div>
           <div className={styles.rightContent}>
-
             <Friends
               title="Friends"
               friendsList={friendsList}
               addFirends={() => setIsMoalType(3)}
+              onSucHandle={onSucHandle}
             />
           </div>
         </div>
       </div>
+
+      {openChat && <ChatPopup onClose={() => { setOpenChat(false) }} />}
 
       <Modal
         title={modalTitle[isModalType]}
