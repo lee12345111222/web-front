@@ -18,8 +18,9 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 const getEvents = (calendarID: any, apiKey: any, clientId: any, accessToken: any) => {
   console.log(clientId)
   async function initiate() {
+    let auth2 = await loadAuth2(gapi, clientId, '');
     //const auth2 = await loadAuth2(gapi, clientId, '')
-    //console.log("****", auth2)
+    console.log("****", auth2)
     // gapi.client
     //   // .init({
     //   //   apiKey: apiKey,
