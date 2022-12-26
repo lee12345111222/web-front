@@ -230,7 +230,10 @@ export const Home = memo(function () {
         </div>
       </div>
 
-      {openChat && <ChatPopup onClose={() => { setOpenChat(false) }} />}
+      {openChat && <ChatPopup
+        isGroup={1}
+        chatInfo={{ id: '1001' }}
+        onClose={() => { setOpenChat(false) }} />}
 
       <Modal
         title={modalTitle[isModalType]}
