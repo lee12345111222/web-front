@@ -1,15 +1,29 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input, Image } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux'
+
+import { post } from '../../fetch';
+import { setUsers } from '../counter/userReducer'
+
 
 import './login.scss';
+import { store } from '../../app/store';
 
-export const Login = memo(function () {
+export const Login = memo(function (props) {
   const navgate = useNavigate()
+  const dispatch = useDispatch()
 
   const onFinish = (values: any) => {
     console.log('Success:', values);
+    post('web/login/login', values).then(res => {
+      localStorage.setItem("userInfo", JSON.stringify(res))
+      dispatch(setUsers(res))
+      navgate('/home')
+    }).catch(err => {
+      console.log("登录失败");
+    })
   };
 
   const onFinishFailed = (errorInfo: any) => {

@@ -1,4 +1,6 @@
 import { memo, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { post } from '../../fetch';
 
 import './index.scss';
 
@@ -8,7 +10,10 @@ import {
   Form,
   Input,
   Select,
+  message
 } from 'antd';
+
+
 
 const { Option } = Select;
 
@@ -37,10 +42,24 @@ const tailFormItemLayout = {
 
 
 export const Regist = memo(function () {
+  const navgate = useNavigate()
   const [form] = Form.useForm();
-
+  const [messageApi] = message.useMessage();
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+    post('web/user/addUser', values).then(res => {
+      console.log("注册成功", res)
+      messageApi.open({
+        type: 'success',
+        content: '注册成功',
+      });
+      navgate('/login')
+    }).catch(err => {
+      messageApi.open({
+        type: 'error',
+        content: '注册失败',
+      });
+    })
   };
 
   const prefixSelector = (
@@ -103,6 +122,15 @@ export const Regist = memo(function () {
             placeholder="Phone number"
             addonBefore={prefixSelector}
             style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          name="postalCode"
+          label="postalCode"
+          tooltip="What do you want others to call you?"
+          rules={[{ required: true, message: 'Please input your postalCode!', whitespace: true }]}
+        >
+          <Input placeholder="postalCode" />
         </Form.Item>
 
         <Form.Item

@@ -1,6 +1,8 @@
 import { memo, useEffect, useState, useRef } from 'react';
 import { Image, Modal, Input } from 'antd';
 import type { InputRef } from 'antd';
+
+import { io } from "socket.io-client";
 import EmojiPopover from '../EmojiPopover'
 
 const { TextArea } = Input;
@@ -97,6 +99,10 @@ const ChatPopup = function (props: ChatPopupProps) {
   //const [openChat, setOpenChat] = useState(false)
 
   useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
     console.log(inputRef)
     inputRef.current!.focus({
       cursor: 'start',
@@ -140,9 +146,9 @@ const ChatPopup = function (props: ChatPopupProps) {
   const scrollToBottom = () => {
     if (messagesEnd && messagesEnd.current) {
       console.log("ref滚动到最底部")
-    //  const 
-      messagesEnd.current.scrollTop =  messagesEnd.current.scrollHeight
-     // messagesEnd.current.scrollIntoView(false);
+      //  const 
+      messagesEnd.current.scrollTop = messagesEnd.current.scrollHeight
+      // messagesEnd.current.scrollIntoView(false);
     }
   };
 
@@ -183,10 +189,10 @@ const ChatPopup = function (props: ChatPopupProps) {
           })}
         </div>
         <div className={styles.footer}>
-          <div style={{marginLeft:'10px'}}>
-          <EmojiPopover onSelect={selectEmoji}></EmojiPopover>
+          <div style={{ marginLeft: '10px' }}>
+            <EmojiPopover onSelect={selectEmoji}></EmojiPopover>
           </div>
-          
+
           <TextArea
             className={styles.input_area}
             value={content}

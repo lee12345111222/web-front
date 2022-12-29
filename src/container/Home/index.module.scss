@@ -153,10 +153,48 @@
     .playDateModal {
       height: 300px;
     }
+  }
 
-    .playContent {
-      height: 300px;
+}
+
+.playDateModal {
+
+  .playContent {
+    height: 600px;
+    overflow: auto;
+
+  }
+
+  .findBox {
+    display: flex;
+
+    .findbtn {
+      margin-left: 10px;
     }
   }
 
+  .details {
+    margin-top: 10px;
+
+    .addFriendBtn {
+      margin-top: 20px;
+    }
+  }
+
+  .applyContent {
+    display: flex;
+    margin-bottom: 10px;
+
+    .applyNekiName {
+      flex: 1;
+    }
+
+    .applyBtnBox {
+      display: flex;
+
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
 }

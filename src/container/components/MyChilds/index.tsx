@@ -6,7 +6,8 @@ import styles from './index.module.scss'
 interface GropProps {
   childsList: any[], // 小孩列表
   addChilds?: Function, // 添加小孩
-  onSucHandle?: Function // 点击小孩回调
+  onSucHandle?: Function, // 点击小孩回调
+  onDelChild?: Function //删除
 }
 
 // 群组

@@ -3,8 +3,15 @@ import { Login } from "./container/Login/login";
 import { Regist } from "./container/Regist";
 import { Home } from "./container/Home";
 import 'antd/dist/reset.css';
+import { useDispatch } from 'react-redux'
+import { setUsers } from './container/counter/userReducer'
 
 function App() {
+  const userInfo = localStorage.getItem('userInfo')
+  if (userInfo) {
+    const dispatch = useDispatch()
+    dispatch(setUsers(JSON.parse(userInfo)))
+  }
   return (
     <>
       <BrowserRouter>

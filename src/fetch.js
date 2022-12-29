@@ -2,18 +2,23 @@
  * 网络请求配置
  */
 import axios from "axios";
+import { useSelector } from 'react-redux'
+import { store } from './app/store'
 
 axios.defaults.timeout = 100000;
-axios.defaults.baseURL = "http://test.mediastack.cn/";
+axios.defaults.baseURL = "http://101.34.110.125:9001/api/";
 
 /**
  * http request 拦截器
  */
 axios.interceptors.request.use(
   (config) => {
+    // const users = useSelector((state: any) => state.users);
+    console.log("token", store.getState().users.token)
     config.data = JSON.stringify(config.data);
     config.headers = {
       "Content-Type": "application/json",
+      "token": store.getState().users.token
     };
     return config;
   },
@@ -65,11 +70,16 @@ export function get(url, params = {}) {
  */
 
 export function post(url, data) {
+  const t = new Date().getTime()
   return new Promise((resolve, reject) => {
-    axios.post(url, data).then(
+    axios.post(`${url}?t=${t}`, data).then(
       (response) => {
-        //关闭进度条
-        resolve(response.data);
+        console.log("响应", response)
+        if (response?.data?.code === 200) {
+          resolve(response.data.result);
+        } else {
+          reject({});
+        }
       },
       (err) => {
         reject(err);
