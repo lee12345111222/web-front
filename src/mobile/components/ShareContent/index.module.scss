@@ -1,0 +1,58 @@
+.shareContent {
+
+  .shareItem {
+    margin-bottom: 10px;
+
+    .itemHeader {
+      display: flex;
+
+      .centerBox {
+        margin-left: 10px;
+        margin-right: 10px;
+        flex: 1;
+
+        .line1 {
+          display: flex;
+
+          .title {
+            flex: 1;
+          }
+
+          .attention {
+            width: 50px;
+            color: aqua;
+          }
+
+        }
+      }
+    }
+
+    .content {
+      margin-top: 20px;
+      margin-bottom: 20px;
+
+      .imgBox {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+
+      }
+
+      .commenInputBox {
+        display: flex;
+        padding: 10px;
+        background-color: #fff;
+
+        .input {
+          flex: 1;
+        }
+      }
+
+      .optBtn {
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 10px;
+      }
+    }
+  }
+}

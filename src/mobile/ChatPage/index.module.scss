@@ -1,0 +1,48 @@
+.chatSwrap {
+  width: 375px;
+  padding: 20px 0;
+  overflow: auto;
+  background-color: #f8f8f8;
+  height: 100vh;
+
+  .content {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .contentItem {
+      margin-bottom: 20px;
+
+      .headerBox {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .content {
+          margin-left: 15px;
+          background: #fff;
+          min-height: 30px;
+          border-radius: 4px;
+          margin-right: 10px;
+          line-height: 30px;
+        }
+      }
+    }
+  }
+
+  .inputBox {
+    position: fixed;
+    bottom: 0;
+    background: rgba(0, 0, 0, .1);
+    width: 100%;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    padding: 10px;
+
+    .input {
+      flex: 1;
+      background: #fff;
+      margin-right: 10px;
+    }
+  }
+}

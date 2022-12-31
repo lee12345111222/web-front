@@ -197,4 +197,21 @@
       }
     }
   }
+
+  .group1 {
+    .groupNameBox {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .name {
+        width: 100px;
+        margin-right: 10px;
+      }
+    }
+
+    .addPerson {
+      margin-bottom: 10px;
+    }
+  }
 }

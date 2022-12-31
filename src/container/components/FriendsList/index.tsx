@@ -1,26 +1,23 @@
 import React, { useState, forwardRef, useImperativeHandle, useEffect } from 'react';
-import { Button, Table } from 'antd';
-import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
+import { Button, Checkbox } from 'antd';
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+
 import { post } from '../../../fetch';
+import styles from './index.module.scss'
 
 interface DataType {
   key: React.Key;
   nekiname: string;
+  userId: number;
+  check?: boolean;
 }
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Nekiname',
-    dataIndex: 'nekiname',
-  },
-
-];
-
 const data: DataType[] = [];
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 120; i++) {
   data.push({
     key: i,
     nekiname: `Edward King ${i}`,
+    userId: i
   });
 }
 
@@ -33,28 +30,19 @@ const page = {
   }]
 }
 
-interface TableParams {
-  pagination?: TablePaginationConfig;
-}
 
 let friendsData: Array<any> = []
 const FriendsList = forwardRef((props, ref) => {
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [userIds, setUserIds] = useState<React.Key[]>([]);
 
   const [friendList, setFriendList] = useState([]);
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(30)
   const [loading, setLoading] = useState(false);
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
+
   useImperativeHandle(ref, () => ({
-    selectedRowKeys: selectedRowKeys,
-    userIds: userIds
+    userIds: userIds,
+    getUsersId: getUsersId
   }));
 
   useEffect(() => {
@@ -72,49 +60,40 @@ const FriendsList = forwardRef((props, ref) => {
     })
   }
 
-  const start = () => {
-    setLoading(true);
-    // ajax request after empty completing
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-      setLoading(false);
-    }, 1000);
-  };
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const getUsersId = (indexs: Array<number>) => {
-    indexs.forEach(index => {
-      const { userId } = friendsData[index]
-      setUserIds([...userIds, userId])
-    });
+  const getUsersId = () => {
+    const userIds: any = [];
+    data.forEach(item => {
+      const { check, userId } = item
+      if (check) {
+        userIds.push(userId)
+      }
+    })
+    return userIds
   }
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
+  const onChange = (e: CheckboxChangeEvent, item: DataType) => {
+    item.check = e.target.checked
+    console.log(`checked = ${e.target.checked}`);
   };
-  const hasSelected = selectedRowKeys.length > 0;
 
-  const handleTableChange = (pagination: TablePaginationConfig,) => {
-    page.current++
-    setTableParams({
-      pagination,
-    });
-    findFirendData();
-  }
 
   return (
-    <div >
-      <div style={{ marginBottom: 16 }}>
-      </div>
-      <Table
-        pagination={tableParams.pagination}
-        onChange={handleTableChange}
-        rowSelection={rowSelection} columns={columns} dataSource={data} />
+    <div className={styles.friendsListContainer}>
+      {
+        data.map(item => {
+          return (
+            <div className={styles.frienditem} key={item.userId}>
+              <div className={styles.check}>
+                <Checkbox onChange={(e) => onChange(e, item)} />
+              </div>
+              <div>{item.nekiname}</div>
+            </div>
+          )
+        })
+      }
+      {
+        //total !== data.length && <div>加载更多</div>
+      }
     </div>
   );
 });

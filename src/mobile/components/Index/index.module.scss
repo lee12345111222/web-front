@@ -1,0 +1,28 @@
+.mobileIndexContent {
+  .indexHomeHeader {
+    display: flex;
+
+    :global {
+      .adm-input {
+        background: #eeeeee;
+        margin-left: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .publishBox {
+    height: 90px;
+    width: 100px;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 90px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}

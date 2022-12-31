@@ -20,6 +20,8 @@ const { Option } = Select;
 const modalTitle = ['', 'Create a Play Date', 'add Group', 'add Friends', 'add Childs', 'Apply List']
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 
+const okText = ['', 'Create Date', 'Create Group', 'Add Friends', 'Add Childs']
+
 
 const getEvents = (calendarID: any, apiKey: any, clientId: any, accessToken: any) => {
   console.log(clientId)
@@ -142,7 +144,7 @@ export const Home = memo(function () {
   }
 
   const addGroupSuc = () => {
-    console.log("添加成功", friendRef.current.selectedRowKeys)
+    console.log("添加成功", friendRef.current.getUsersId())
     //const data = groupList.push(1)
     //setGroupList(...data)
   }
@@ -330,6 +332,7 @@ export const Home = memo(function () {
         onOk={handleOk}
         onCancel={handleCancel}
         className={styles.playDateModal}
+        okText={okText[isModalType]}
       >
         <div className={styles.playContent}>
           {
@@ -344,8 +347,20 @@ export const Home = memo(function () {
             <AddFirendsConent form={form} />
           }
           {
-            isModalType === 2 &&
-            <FriendsList ref={friendRef} />
+            isModalType === 2 && (
+              <div className={styles.group1}>
+                <div className={styles.groupNameBox}>
+                  <div className={styles.name}>群聊名称</div>
+                  <Input placeholder="please input groupName" />
+                </div>
+                <div>
+                  <div className={styles.addPerson}>群聊人员</div>
+                  <FriendsList ref={friendRef} />
+                </div>
+
+              </div>
+            )
+
           }
           {
             isModalType === 5 &&

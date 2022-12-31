@@ -20,7 +20,7 @@ export const Login = memo(function (props) {
     post('web/login/login', values).then(res => {
       localStorage.setItem("userInfo", JSON.stringify(res))
       dispatch(setUsers(res))
-      navgate('/home')
+      navgate('mobile/home')
     }).catch(err => {
       console.log("登录失败");
     })

@@ -1,0 +1,27 @@
+.mobileFriendsContent {
+
+  .btnBox {
+    margin-bottom: 20px;
+
+    button {
+      height: 40px;
+    }
+
+    .addUser {
+      margin-right: 20px;
+    }
+  }
+
+  .userBox {
+    .userItem {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: center;
+
+      .nickname {
+        margin-left: 10px;
+      }
+    }
+  }
+
+}
