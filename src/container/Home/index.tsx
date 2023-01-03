@@ -1,7 +1,7 @@
 import { memo, useEffect, useState, createRef } from 'react';
-import { gapi, loadAuth2 } from "gapi-script";
+import { gapi, loadAuth2, loadClientAuth2, loadAuth2WithProps } from "gapi-script";
 import Calendars from '../components/Calendar'
-import { Image, Modal, Input, Form, Select, message, Button, Badge, Avatar, DatePicker } from 'antd';
+import { Image, Modal, Input, Form, Select, message, Button, Badge, Avatar, DatePicker, Radio } from 'antd';
 import { useSelector } from 'react-redux'
 import { post } from '../../fetch';
 import Groups from '../components/Groups';
@@ -10,6 +10,8 @@ import ShareContent from '../components/ShareContent'
 import MyChilds from '../components/MyChilds'
 import ChatPopup from '../components/ChatPopup';
 import FriendsList from '../components/FriendsList'
+//const { google } = require('googleapis');
+//import getToken from '../../utils/common'
 
 import 'animate.css';
 import styles from './index.module.scss'
@@ -21,11 +23,14 @@ const modalTitle = ['', 'Create a Play Date', 'add Group', 'add Friends', 'add C
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
 
 const okText = ['', 'Create Date', 'Create Group', 'Add Friends', 'Add Childs']
+const okHandle: any = ''
+
 
 
 const getEvents = (calendarID: any, apiKey: any, clientId: any, accessToken: any) => {
   console.log(clientId)
   async function initiate() {
+    loadClientAuth2(gapi, clientId, 'https://www.googleapis.com/auth/calendar')
     let auth2 = await loadAuth2(gapi, clientId, '');
     //const auth2 = await loadAuth2(gapi, clientId, '')
     console.log("****", auth2)
@@ -68,12 +73,15 @@ export const Home = memo(function () {
   const calendarID = process.env.REACT_APP_CALENDAR_ID;
   const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
   const accessToken = process.env.REACT_APP_GOOGLE_ACCESS_TOKEN;
-  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const clientId: any = process.env.REACT_APP_CLIENT_ID;
+  const CLIENT_SECRET: any = process.env.REACT_APP_CLIENT_SECRET;
+  const REDIRECT_URL = process.env.REACT_APP_REDIRECT_URL
+  const scopes = ["https://www.googleapis.com/auth/calendar", "https://www.googleapis.com/auth/calendar.events"];
 
   const [isModalType, setIsMoalType] = useState(0)
-  const [groupList, setGroupList]: any = useState([1])
-  const [friendsList, setFriendsList]: any = useState([1])
-  const [childsList, setChildsList]: any = useState([1])
+  const [groupList, setGroupList]: any = useState([])
+  const [friendsList, setFriendsList]: any = useState([])
+  const [childsList, setChildsList]: any = useState([])
   const [isParents, setIsParents] = useState(true)
   const [openChat, setOpenChat] = useState(false)
 
@@ -84,12 +92,28 @@ export const Home = memo(function () {
   const users = useSelector((state: any) => state.users);
   console.log("uuser", users)
 
-
   //const chatRef = useRef(null)
   //const chatRef = createRef();
+  // const oauth2Client = new google.auth.OAuth2(
+  //   clientId,
+  //   CLIENT_SECRET,
+  //   REDIRECT_URL
+  // );
+
+  // const url = oauth2Client.generateAuthUrl({
+  //   // 'online' (default) or 'offline' (gets refresh_token)
+  //   access_type: 'offline',
+  //   // If you only need one scope you can pass it as a string
+  //   scope: scopes
+  // });
 
   useEffect(() => {
-    getEvents(calendarID, apiKey, clientId, accessToken)
+    // oauth2Client()
+    //let auth2 = loadAuth2WithProps(gapi, { /* object with props from gapi */ });
+    loadClientAuth2(gapi, clientId, 'https://www.googleapis.com/auth/calendar')
+    console.log("&&&&", clientId)
+    //loadClientAuth2(gapi, clientId, "urn:ietf:wg:oauth:2.0:oob")
+    //getEvents(calendarID, apiKey, clientId, accessToken)
   }, [])
 
   // 获取附属用户列表
@@ -98,7 +122,12 @@ export const Home = memo(function () {
   }, [])
 
   const getChildList = () => {
-    post('web/user/queryPageUserInfo', { realName: '', age: '', sex: '' }).then(res => {
+    post('web/user/queryPageUserInfo', {
+      page: {
+        size: '100',
+        current: '1'
+      }
+    }).then(res => {
       const { records } = res
       setChildsList(records)
     })
@@ -158,15 +187,15 @@ export const Home = memo(function () {
     console.log("添加小孩", form.getFieldsValue(true))
     const params = form.getFieldsValue(true)
     post('web/user/addOtherUser', params).then(res => {
-      console.log("创建成功")
+      console.log(123)
       messageApi.open({
         type: 'success',
         content: '注册成功',
       });
-      const data = childsList.push(params)
-      setChildsList(...data)
+      setChildsList([...childsList, params])
       setIsMoalType(0)
     }).catch(err => {
+      console.log(err)
       messageApi.open({
         type: 'error',
         content: '注册成功',
@@ -174,7 +203,7 @@ export const Home = memo(function () {
     })
   }
 
-  const delChilds = (item: any) => {
+  const delChilds = (item: any, index: number) => {
     const { userId } = item
     post('web/user/delOtherUser', { userId }).then(res => {
       console.log("创建成功")
@@ -182,9 +211,8 @@ export const Home = memo(function () {
         type: 'success',
         content: '删除成功',
       });
-      const index = childsList.findIndex((item: { userId: any; }) => item.userId === userId)
       childsList.splice(index, 1)
-      setChildsList(...childsList)
+      setChildsList([...childsList])
     }).catch(err => {
       messageApi.open({
         type: 'error',
@@ -273,25 +301,16 @@ export const Home = memo(function () {
                   childsList={childsList}
                   onSucHandle={clickChildHandSuc}
                   onDelChild={delChilds}
-                  addChilds={() => {
+                  addChilds={(okHandle: Function) => {
+                    okHandle = okHandle
                     form.resetFields();
                     setIsMoalType(4)
                   }} />
               </div>
             }
-            <div className={styles.shareMoment}>
-              <Input
-                className={styles.shareInput}
-                placeholder="Share a moment" />
-              <div className={styles.line1} />
-              <div className={styles.videoBox}>
-                <div>Live video</div>
-                <div>Phone/video</div>
-              </div>
-            </div>
 
             <div className={styles.shareContainer}>
-              <ShareContent shareList={[]}></ShareContent>
+              <ShareContent shareList={[]} />
             </div>
 
             <div className={styles.knowFriends}>
@@ -381,6 +400,8 @@ const ChildContent = (props: any) => {
         form={form}
         name="register"
         scrollToFirstError
+        labelAlign="right"
+        labelCol={{ span: 5, offset: 0 }}
       >
         <Form.Item
           name="realName"
@@ -398,15 +419,11 @@ const ChildContent = (props: any) => {
           <Input placeholder="place input age" />
         </Form.Item>
 
-        <Form.Item
-          name="sex"
-          label="Sex">
-          <Select
-            defaultValue="1"
-          >
-            <Select.Option value="1">男</Select.Option>
-            <Select.Option value="0">女</Select.Option>
-          </Select>
+        <Form.Item name="sex" label="Sex">
+          <Radio.Group>
+            <Radio value="1"> 男 </Radio>
+            <Radio value="0"> 女 </Radio>
+          </Radio.Group>
         </Form.Item>
       </Form>
     </div>

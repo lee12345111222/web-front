@@ -1,19 +1,37 @@
 .myChildsBox {
   display: flex;
   align-items: center;
+  width: 420px;
 
   .content {
     display: flex;
     align-items: flex-end;
     flex: 1;
+    overflow: auto;
   }
 
   .addBtn {
-    width: 100px;
+    width: 80px;
+    text-align: center;
   }
 
   .childAvar {
     margin-right: 20px;
+    position: relative;
+
+    .delChild {
+      display: none;
+      position: absolute;
+      right: 0;
+      z-index: 100;
+      color: blue;
+      width: 30px;
+      height: 30px;
+    }
+
+    &:hover .delChild {
+      display: block;
+    }
 
     .img {
       border-radius: 100%;

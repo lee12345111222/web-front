@@ -121,7 +121,8 @@ export default function EmojiPopover({ onSelect }: IProps) {
     <div className={style.content}>
       <div
         className={style.emoji_wrapper}
-        style={{ display: visible ? 'block' : 'none' }}>
+        style={{ display: visible ? 'flex' : 'none' }}
+      >
         {emojiList.map((emoji) => (
           <span
             onClick={iconClickHandle.bind(null, emoji)}

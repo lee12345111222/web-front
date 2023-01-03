@@ -62,41 +62,6 @@
           }
         }
 
-        .shareMoment {
-          margin-top: 30px;
-          position: relative;
-          height: 120px;
-          border-radius: 20px;
-          background: rgba(0, 0, 0, .1);
-          border: 1px solid rgba(5, 5, 5, .1);
-          padding: 20px;
-
-          .shareInput {
-            border-radius: 20px;
-            width: 370px;
-          }
-
-          .line1 {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            height: 3px;
-            border-bottom: 2px solid rgba(5, 5, 5, 0.1);
-          }
-
-          .videoBox {
-            height: 30px;
-            display: flex;
-            background: rgba(0, 0, 0);
-            color: #fff;
-            font-size: 24px;
-            font-weight: 600;
-            align-items: center;
-            justify-content: space-around;
-          }
-        }
-
-
-
         .shareContainer {
           margin-top: 30px;
           margin-bottom: 30px;
@@ -160,7 +125,8 @@
 .playDateModal {
 
   .playContent {
-    height: 600px;
+    min-height: 300px;
+    max-height: 600px;
     overflow: auto;
 
   }

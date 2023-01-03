@@ -1,12 +1,13 @@
 import { memo, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import { Button, Checkbox, Form, Input, Image } from 'antd';
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Button, Checkbox, Form, Input, Image, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux'
 
+import { commonLogin } from '../../apis/SystemApi'
+
 import { post } from '../../fetch';
 import { setUsers } from '../counter/userReducer'
-
 
 import './login.scss';
 import { store } from '../../app/store';
@@ -14,16 +15,32 @@ import { store } from '../../app/store';
 export const Login = memo(function (props) {
   const navgate = useNavigate()
   const dispatch = useDispatch()
+  const [searchParams, setSearchParams] = useSearchParams();
+  //const [messageApi] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-    post('web/login/login', values).then(res => {
-      localStorage.setItem("userInfo", JSON.stringify(res))
-      dispatch(setUsers(res))
+
+  useEffect(() => {
+    const code = searchParams.get('code')
+    // console.log("code", code)
+    // if (code === '20006') {
+    //   messageApi.open({
+    //     type: 'success',
+    //     content: '登录已过期，请重新登录',
+    //   });
+    // }
+  }, [])
+
+  const onFinish = async (values: any) => {
+    try {
+      const resData = await commonLogin(values)
+      console.log("9999", resData)
+      localStorage.setItem("userInfo", JSON.stringify(resData))
+      dispatch(setUsers(resData))
       navgate('/home')
-    }).catch(err => {
-      console.log("登录失败");
-    })
+    } catch (error) {
+      console.log("errr", error);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {

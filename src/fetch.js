@@ -4,6 +4,8 @@
 import axios from "axios";
 import { useSelector } from 'react-redux'
 import { store } from './app/store'
+import { useNavigate } from "react-router-dom";
+
 
 axios.defaults.timeout = 100000;
 axios.defaults.baseURL = "http://101.34.110.125:9001/api/";
@@ -32,8 +34,12 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
   (response) => {
-    if (response.data.errCode === 2) {
-      console.log("过期");
+    // 登录过期，重新登录
+    if (+response.data.code === 20006) {
+      var domain = window.location.host
+      const protocol = window.location.protocol + '//'
+      window.location.href = `${protocol}${domain}/login?code=20006`
+      return
     }
     return response;
   },

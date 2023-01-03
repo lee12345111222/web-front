@@ -1,16 +1,19 @@
 import { memo, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { post } from '../../fetch';
+import { addUser } from '../../apis/UserApi'
+
+
 
 import './index.scss';
 
 import {
   Button,
-  Checkbox,
   Form,
   Input,
   Select,
-  message
+  message,
+  Image
 } from 'antd';
 
 
@@ -45,21 +48,25 @@ export const Regist = memo(function () {
   const navgate = useNavigate()
   const [form] = Form.useForm();
   const [messageApi] = message.useMessage();
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('Received values of form: ', values);
-    post('web/user/addUser', values).then(res => {
-      console.log("注册成功", res)
-      messageApi.open({
-        type: 'success',
-        content: '注册成功',
-      });
-      navgate('/login')
-    }).catch(err => {
+    try {
+      const resData = await addUser(values);
+      if (resData) {
+        messageApi.open({
+          type: 'success',
+          content: '注册成功',
+        });
+        navgate('/login')
+      }
+    } catch (err) {
+      console.error(err)
       messageApi.open({
         type: 'error',
         content: '注册失败',
       });
-    })
+    }
+
   };
 
   const prefixSelector = (
@@ -73,7 +80,9 @@ export const Regist = memo(function () {
 
 
   return <div className='regist-content'>
-    <div className='login-left'></div>
+    <Image
+      preview={false}
+      src={require('../../images/login.png')} />
     <div className='login-right'>
       <h2 className='login-title'>Sign up</h2>
       <Form
